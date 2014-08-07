@@ -18,11 +18,11 @@ RTOP=zeros(size(mask));
 RTOP(mask~=0)=rtop;
 %%
 if(nargin>=4&& (~isempty(FileName)))
-sd=[2.500000,-0.000000,0.000000; -0.000000,2.500000,0.000000; -0.000000,-0.000000,2.500000]; 
-mat2nhdr(RTOP, FileName, 'custom',sd);
+% sd=[2.500000,-0.000000,0.000000; -0.000000,2.500000,0.000000; -0.000000,-0.000000,2.500000]; 
+% mat2nhdr(RTOP, FileName, 'custom',sd);
+nii=make_nii(RTOP);
+save_nii(nii,[FileName,'_RTOP.nii']);
 end
-
-
 
 end
 
@@ -41,7 +41,7 @@ N_basis=length(qg_basis);
 N_column=N_basis+1;
 
 RTOP_basis=zeros(1,N_column);%coefficients in the covariance matrix
-R=D0/(2*pi^2);
+
 RTOP_basis(end)=pi^(1.5)/sqrt(det(D0));
 
 RTOP_basis(1:N_basis)=2*pi^(1.5)/sqrt(sigma(1)*sigma(2)^2)*ones(1,N_basis);

@@ -5,11 +5,9 @@ end
 
 [~,~,nx,ny]=size(D);
 
-[gg,~]=icosahedron(4); %gradient directions for ODF
-L=length(gg);
 msd=zeros(nx,ny);
 for ix=1:nx
-    for iy=1:ny
+    parfor iy=1:ny
         MSD_basis=ConstructMSDBasis(D(:,:,ix,iy),sigma);
         Vec=MSD_basis*V(:,ix,iy);
         msd(ix,iy)=sum(Vec);
@@ -20,12 +18,11 @@ MSD(mask~=0)=msd;
 
 %%
 if(nargin>=4&& (~isempty(FileName)))
-sd=[2.500000,-0.000000,0.000000; -0.000000,2.500000,0.000000; -0.000000,-0.000000,2.500000]; 
-mat2nhdr(MSD, FileName, 'custom',sd);
+% sd=[2.500000,-0.000000,0.000000; -0.000000,2.500000,0.000000; -0.000000,-0.000000,2.500000]; 
+% mat2nhdr(MSD, FileName, 'custom',sd);
+nii=make_nii(MSD);
+save_nii(nii,[FileName,'_MSD.nii']);
 end
-
-
-
 
 end
 

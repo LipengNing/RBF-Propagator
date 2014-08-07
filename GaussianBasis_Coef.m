@@ -8,7 +8,7 @@ if(nargin<4)
     sigma=[0.0015 0.0008];
 end
 
-%CondNumber=1e7;
+% CondNumber=1e7;
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%
 t = 70*1e-3;
@@ -42,16 +42,14 @@ for ix=1:nx
         end
         E(E>1)=1;
         D0=EstTensor(qg,E);
-        
         D_store(:,:,ix,iy)=D0;
-        
         [A,B,c]=ConstructBasisMatrix(D0,qg,sigma);
 %         lambA=eig(A'*A);
 %         lamb=max(lambA)/CondNumber-min(lambA);
 %         lamb=max(lamb,0)
         lamb=0.00055;
         opts = optimset('Algorithm','active-set','Display','off','MaxIter',1000);
-        v=quadprog(A'*A+lamb*eye(size(A,2)),-A'*E,-B,zeros(size(B,1),1),c,1,[],[],[],opts);    
+        v=quadprog(A'*A+lamb*eye(size(A,2)),-A'*E,-B,zeros(size(B,1),1),c,1,[],[],flipud(eye(size(A,2),1)),opts);    
         V(:,ix,iy)=v; 
     end
 end
@@ -129,7 +127,6 @@ Dif=kron(toeplitz(eye(1,N_bfine-1),[1 -1 zeros(1,N_bfine-2)]),eye(N_ug));%ensure
 B=[B; Dif*B]; 
 
 end
-
 
 
 function D=EstTensor(q,E)

@@ -14,7 +14,7 @@ for ix=1:nx
         odf(ix,iy,:)=ODF_basis*V(:,ix,iy);
     end
 end
-
+odf=reshape(odf,nx*ny,L);
 
 [nx,ny,nz]=size(mask);
 ODF=zeros(nx*ny*nz,L);
