@@ -107,18 +107,6 @@ B(:,1:N_basis)=exp(-X1)+exp(-X2);
 
 c(1:N_basis)=2*exp(-(qg_basis.^2)*[sigma(1);sigma(2);sigma(2)]);
 
-%%
-% for n=1:N_basis
-%     x1=sum(((qg-ones(N,1)*qg_basis(n,:))*D).*(qg-ones(N,1)*qg_basis(n,:)),2);
-%     x2=sum(((qg+ones(N,1)*qg_basis(n,:))*D).*(qg+ones(N,1)*qg_basis(n,:)),2);
-%     A(:,n)=exp(-x1)+exp(-x2);
-% 
-%     x1=sum(((qg_fine-ones(N_fine,1)*qg_basis(n,:))*D).*(qg_fine-ones(N_fine,1)*qg_basis(n,:)),2);
-%     x2=sum(((qg_fine+ones(N_fine,1)*qg_basis(n,:))*D).*(qg_fine+ones(N_fine,1)*qg_basis(n,:)),2);
-%     B(:,n)=exp(-x1)+exp(-x2);
-% 
-%     c(n)=2*exp(-(qg_basis(n,:)*D*qg_basis(n,:)'));
-% end
 
 Dif=kron(toeplitz(eye(1,N_bfine-1),[1 -1 zeros(1,N_bfine-2)]),eye(N_ug));%ensure signal decay along each direction
 B=[B; Dif*B]; 
