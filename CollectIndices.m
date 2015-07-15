@@ -12,14 +12,15 @@ if(flag==1)
 % stronger constraints on the decay of signal, slower
 [D,V,mask] = run_GaussianBasis_Decay(input_dwi,mask_name);
 else
-% weaker constraints, but faster, it takes about 10 hours for one volume
+% weaker constraints, but faster, it may takes about 10 hours for one volume
 [D,V,mask] = run_GaussianBasis(input_dwi,mask_name);
 end
 
 save([ExportName,'_coef']);
 
+%% write data into Nift files 
 nii=MRIread(mask_name);
-%%
+ 
 RTOP=ComputeRTOP(D,V,mask);
 RTOP=permute(RTOP,[2 1 3]);
 nii.vol=RTOP;
